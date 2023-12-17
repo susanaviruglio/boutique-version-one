@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # in the actual web says .auth / it is used for connecting via social media accounts.
+    'allauth', #alluth itself
+    'allauth.account', #allow users all the basic account features
+    'allauth.socialaccount', # handles logging in via social media providers like Facebook
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,13 +65,40 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request', #required by allauth
+                # allow access the HTTP request object in our templates.
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
+# taken from https://docs.allauth.org/en/latest/installation/quickstart.html
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+] #Allowing users to log into our store via their email address
+
+
+
+SITE_ID = 1
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' #use email or username
+ACCOUNT_EMAIL_REQUIRED = True #an emai is required to register on the site
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #same
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True #same
+ACCOUNT_USERNAME_MIN_LENGTH = 4  #minimun user length of 4 characters
+LOGIN_URL = '/accounts/login/' #specifying a login url 
+LOGIN_REDIRECT_URL = '/' # an url to redirect back to after logging in.
+
 
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 

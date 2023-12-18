@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth', #alluth itself
     'allauth.account', #allow users all the basic account features
     'allauth.socialaccount', # handles logging in via social media providers like Facebook
+    'home'
 ]
 
 
@@ -60,7 +61,11 @@ ROOT_URLCONF = 'boutique_ado.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth'),
+            
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

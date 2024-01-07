@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'allauth.account', #allow users all the basic account features
     'allauth.socialaccount', # handles logging in via social media providers like Facebook
     'home',
-    'products'
+    'products',
+    'bag'
 ]
 
 
